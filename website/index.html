@@ -633,10 +633,22 @@ body {
   animation: pulse-dot 2s infinite;
 }
 
-.embed-shell iframe {
+/* Responsive Power BI embed — locks to report's native 1140×541 ratio.
+   At viewports wider than 1140px it scales up; narrower it shrinks
+   proportionally so nothing clips or spills. */
+.embed-ratio-wrap {
+  position: relative;
   width: 100%;
-  height: 78vh;
-  min-height: 540px;
+  padding-bottom: 47.48%;   /* 541.25 / 1140 × 100 */
+  height: 0;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.embed-ratio-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   border: none;
   display: block;
 }
@@ -1025,26 +1037,18 @@ footer {
     </p>
   </div>
 
-  <div class="result-strip mb-md">
-    <div class="rs-stat"><span class="rs-big">Page 1</span><span class="rs-label">The Big Picture</span></div>
-    <div class="rs-div"></div>
-    <div class="rs-stat"><span class="rs-big">Page 2</span><span class="rs-label">Passenger Voice</span></div>
-    <div class="rs-div"></div>
-    <div class="rs-stat"><span class="rs-big">Page 3</span><span class="rs-label">Route Intelligence</span></div>
-    <div class="rs-div"></div>
-    <div class="rs-stat"><span class="rs-big">Live</span><span class="rs-label">Real Skytrax Data</span></div>
-  </div>
-
   <div class="embed-shell">
     <div class="embed-bar">
       <span><span class="live-dot"></span>Connected · Power BI Service · Public embed</span>
       <span>Use the filters inside the dashboard to drill by cabin, route, and aircraft</span>
     </div>
-    <iframe
-      title="Passenger Experience Analytics Dashboard"
-      src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYmQ1ZjYyMjItNDRkZS00MjJjLTk4MDItYTg2NDhhYmM5OWU3IiwidCI6IjkzYWVkYmRjLWNjNjctNDY1Mi1hYTEyLWQyNTBhODc2YWU3OSJ9&pageName=ReportSectiondfe720a64c6cd2186cbd"
-      allowfullscreen>
-    </iframe>
+    <div class="embed-ratio-wrap">
+      <iframe
+        title="Passenger Experience Analytics Dashboard"
+        src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYmQ1ZjYyMjItNDRkZS00MjJjLTk4MDItYTg2NDhhYmM5OWU3IiwidCI6IjkzYWVkYmRjLWNjNjctNDY1Mi1hYTEyLWQyNTBhODc2YWU3OSJ9&pageName=ReportSectiondfe720a64c6cd2186cbd"
+        allowfullscreen>
+      </iframe>
+    </div>
   </div>
 
   <div class="insight mt-sm">
