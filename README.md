@@ -31,7 +31,7 @@ To demonstrate capability across the full analytical scope of the role, five syn
 | A/B Test — Meal Service | 6,000 | Experimental meal service trial |
 | Customer Profiles | 22,000 | Loyalty segmentation, churn risk, RFM |
 
-> **Note:** Synthetic datasets were designed with realistic distributions, built-in anomalies, and cross-dataset relationships. They are available in the `05_data/synthetic/` directory with full documentation.
+> **Note:** Synthetic datasets were designed with realistic distributions, built-in anomalies, and cross-dataset relationships. They are available in the `07_data/synthetic/` directory with full documentation.
 
 ---
 
@@ -142,7 +142,7 @@ RETURN AVERAGE(Reviews[overall_rating_10]) - Prior
 ---
 
 ### Piece 05 — A/B Test: Elevated Meal Service
-**Script:** `04_ab_test/04_qatar_ab_test.py`  
+**Script:** `05_ab_test/04_qatar_ab_test.py`  
 **Data:** Synthetic meal service trial dataset (n=6,000)  
 **Output:** 5 charts + full statistical report
 
@@ -170,7 +170,7 @@ A complete experimental analysis of a hypothetical elevated meal service trial a
 ---
 
 ### Piece 06 — Recommendation Propensity Model
-**Script:** `05_regression/05_propensity_model.py`  
+**Script:** `06_regression_recommendation/05_propensity_model.py`  
 **Data:** Real Skytrax reviews + NLP sentiment pipeline output (joined on review_id)  
 **Output:** 9 charts + feature importance CSV + propensity results CSV + trained model (`.pkl`)
 
@@ -246,35 +246,39 @@ qatar-airways-pdd-portfolio/
 ├── README.md
 │
 ├── 00_scraper/
-│   └── 01_qatar_airline_reviews_scraper.py
-│   └── 02_qatar_seat_reviews_scraper.py
-│   └── 03_qatar_lounge_reviews_scraper.py
-│   └── 04_scraper.ipynb
-│   └── 05_qatar_tripadvisor_reviews_scraper #does not work - gets blocked 
+│   ├── 01_qatar_airline_reviews_scraper.py
+│   ├── 02_qatar_seat_reviews_scraper.py
+│   ├── 03_qatar_lounge_reviews_scraper.py
+│   ├── 04_scraper.ipynb
+│   └── 05_qatar_tripadvisor_reviews_scraper.py   # blocked by site — not functional
 │
 ├── 01_eda/
-│   └── qatar_eda.py                  # 12-chart EDA pipeline
-│   └── qatar_eda_2.py                # Corrected with Qatar colours
+│   ├── qatar_eda.py                              # original EDA pipeline
+│   └── qatar_eda_2.py                            # corrected with Qatar brand colours
 │
 ├── 02_nlp/
-│   ├── a_grok_qatar_review_analysis.ipynb   # Groq API required
-│   ├── b_ollama_qatar_review_analysis.ipynb   # Ollama local model pipeline
+│   ├── a_grok_qatar_review_analysis.ipynb        # Groq API pipeline (requires GROQ_API_KEY)
+│   └── b_ollama_qatar_review_analysis.ipynb      # Ollama local pipeline (no rate limits)
 │
 ├── 03. nlp_clustering/
-│   └── 03_nlp_review_split.ipynb     # Keyword split and Semantic complaint/praise clustering
+│   └── 03_nlp_review_split.ipynb                 # keyword split + semantic complaint/praise clustering
 │
-├── 04_ab_test/
-│   └── 04_qatar_ab_test.py           # Full A/B test analysis
-│   └── 04_notebook_ab_tests.ipynb    # Colab notebook
+├── 04_PowerBI_Dashboard/
+│   ├── Reviews.pbix                              # Power BI dashboard file
+│   └── embed code.txt                            # embedded microsite iframe code
 │
-├── 05_regression/
-│   └── 05_propensity_model.py        # Recommendation propensity model (LR + RF + XGBoost + SHAP)
+├── 05_ab_test/
+│   ├── 04_qatar_ab_test.py                       # full A/B test analysis
+│   └── 04_notebook_ab_tests.ipynb                # Colab notebook version
 │
-├── 05_data/
+├── 06_regression_recommendation/
+│   └── 05_propensity_model.py                    # recommendation propensity model (LR + RF + XGBoost + SHAP)
+│
+├── 07_data/
 │   ├── scraped/
-│       ├── qatar_airline_reviews.csv
-│       ├── qatar_lounge_reviews.csv
-│       ├── qatar_seat_reviews.csv                     
+│   │   ├── qatar_airline_reviews.csv
+│   │   ├── qatar_lounge_reviews.csv
+│   │   └── qatar_seat_reviews.csv
 │   └── synthetic/
 │       ├── 01_passenger_survey.csv
 │       ├── 02_flight_operations.csv
@@ -282,15 +286,16 @@ qatar-airways-pdd-portfolio/
 │       ├── 04_ab_test_meal.csv
 │       └── 05_customer_profiles.csv
 │
-└── 06_outputs/
-│   └── charts/
-│       ├── 01_eda_charts/
-│       ├── 02_nlp_charts/
-│       ├── 03_ab_test_charts/
-│       ├── 05_regression_charts/
-│   └── nlp_output_files/
-│   └── propensity_model/             # Model pkl + results CSV + feature importance CSV
-└── 07_branding_elements/ # used for power bi dashboard and slides
+├── 08_outputs/
+│   ├── charts/
+│   │   ├── 01_eda_charts/                        # 12 EDA charts
+│   │   ├── 02_nlp_charts/                        # word clouds + sentiment trend dashboard
+│   │   ├── 03_ab_test_charts/                    # 5 A/B test charts
+│   │   └── 05_regression_charts/                 # 9 propensity model charts
+│   ├── nlp_output_files/                         # Power BI-ready CSVs from NLP pipeline
+│   └── propensity_model/                         # model pkl + results CSV + feature importance CSV
+│
+└── 09_branding_elements/                         # Qatar Airways brand assets for dashboard and slides
 
 ```
 
@@ -306,29 +311,29 @@ pip install pandas numpy matplotlib seaborn scipy scikit-learn \
 
 ### Execution order
 ```bash
-# 0. Scrape Data
+# 0. Scrape data
 python 00_scraper/01_qatar_airline_reviews_scraper.py
 
 # 1. EDA
 python 01_eda/qatar_eda_2.py
 
-# 2a. NLP (Groq API — requires GROQ_API_KEY)
-VSCode/Colab 02_nlp/a_grok_qatar_review_analysis.ipynb #run on colab for compute resources
-                OR 
-# 2b. NLP (Ollama local — requires ollama serve + model pulled)
-VSCode/Colab 02_nlp/b_ollama_qatar_review_analysis.ipynb
+# 2a. NLP — Groq API (requires GROQ_API_KEY, run on Colab for compute)
+# open: 02_nlp/a_grok_qatar_review_analysis.ipynb
+#                 OR
+# 2b. NLP — Ollama local (requires: ollama serve && ollama pull llama3.1)
+# open: 02_nlp/b_ollama_qatar_review_analysis.ipynb
 
-# 3. Keyword splitting and Semantic Clustering for Power BI
-VSCode/Colab 03. nlp_clustering/03_nlp_review_split.ipynb
+# 3. Semantic clustering for Power BI
+# open: 03. nlp_clustering/03_nlp_review_split.ipynb
 
 # 4. A/B test analysis
-VSCode/Colab 04_ab_test/04_notebook_ab_tests.ipynb #Run on colab
-                        OR
-python 04_ab_test/04_qatar_ab_test.py
+# open: 05_ab_test/04_notebook_ab_tests.ipynb   (Colab recommended)
+#                 OR
+python 05_ab_test/04_qatar_ab_test.py
 
-# 5. Recommendation propensity model (requires NLP output from step 2)
+# 5. Recommendation propensity model (depends on NLP output from step 2)
 pip install xgboost shap
-python 05_regression/05_propensity_model.py
+python 06_regression_recommendation/05_propensity_model.py
 
 ```
 
