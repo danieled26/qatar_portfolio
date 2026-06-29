@@ -297,6 +297,6 @@ Regression and NLP theme analysis both identify food & beverage as an underperfo
 ## Contact
 
 **Edwin Daniels**  
-[LinkedIn](www.linkedin.com/in/edwin-daniels) · [Email](edwin.d.daniels@gmail.com) · [Portfolio Microsite]
+[LinkedIn](https://www.linkedin.com/in/edwin-daniels) · [Email](malito:edwin.d.daniels@gmail.com) · [Portfolio Microsite]
 
 *This portfolio was developed independently as part of a job application. All analysis and code is original work. The Skytrax review data was collected via public web scraping for non-commercial analytical purposes.*
