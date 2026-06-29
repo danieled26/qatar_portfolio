@@ -1,0 +1,51 @@
+theme,theme_col,seat_type,n_mentioned,n_positive,n_negative,n_neutral,pct_positive,pct_negative,pct_neutral,sentiment_ratio
+Seat Comfort,theme_seat_comfort,Business Class,489,281,87,121,57.5,17.8,24.7,0.397
+Seat Comfort,theme_seat_comfort,Economy Class,563,176,144,242,31.3,25.6,43.0,0.057
+Seat Comfort,theme_seat_comfort,First Class,24,11,2,11,45.8,8.3,45.8,0.375
+Seat Comfort,theme_seat_comfort,Premium Economy,2,2,0,0,100.0,0.0,0.0,1.0
+Seat Comfort,theme_seat_comfort,All Cabins,1078,470,233,374,43.6,21.6,34.7,0.22
+Cabin Crew,theme_cabin_crew,Business Class,680,507,65,103,74.6,9.6,15.1,0.65
+Cabin Crew,theme_cabin_crew,Economy Class,1134,734,197,201,64.7,17.4,17.7,0.474
+Cabin Crew,theme_cabin_crew,First Class,36,25,2,9,69.4,5.6,25.0,0.639
+Cabin Crew,theme_cabin_crew,Premium Economy,7,7,0,0,100.0,0.0,0.0,1.0
+Cabin Crew,theme_cabin_crew,All Cabins,1857,1273,264,313,68.6,14.2,16.9,0.543
+Food & Beverage,theme_food_beverage,Business Class,626,288,125,209,46.0,20.0,33.4,0.26
+Food & Beverage,theme_food_beverage,Economy Class,1003,324,220,455,32.3,21.9,45.4,0.104
+Food & Beverage,theme_food_beverage,First Class,34,14,7,12,41.2,20.6,35.3,0.206
+Food & Beverage,theme_food_beverage,Premium Economy,6,3,0,3,50.0,0.0,50.0,0.5
+Food & Beverage,theme_food_beverage,All Cabins,1669,629,352,679,37.7,21.1,40.7,0.166
+IFE,theme_ife,Business Class,319,109,43,164,34.2,13.5,51.4,0.207
+IFE,theme_ife,Economy Class,643,222,75,345,34.5,11.7,53.7,0.229
+IFE,theme_ife,First Class,21,7,3,11,33.3,14.3,52.4,0.19
+IFE,theme_ife,Premium Economy,1,0,0,1,0.0,0.0,100.0,0.0
+IFE,theme_ife,All Cabins,984,338,121,521,34.3,12.3,52.9,0.221
+Wi-Fi,theme_wifi,Business Class,253,24,79,150,9.5,31.2,59.3,-0.217
+Wi-Fi,theme_wifi,Economy Class,440,38,55,347,8.6,12.5,78.9,-0.039
+Wi-Fi,theme_wifi,First Class,20,1,8,10,5.0,40.0,50.0,-0.35
+Wi-Fi,theme_wifi,Premium Economy,2,1,0,1,50.0,0.0,50.0,0.5
+Wi-Fi,theme_wifi,All Cabins,715,64,142,508,9.0,19.9,71.0,-0.109
+Lounge,theme_lounge,Business Class,347,148,96,100,42.7,27.7,28.8,0.15
+Lounge,theme_lounge,Economy Class,408,53,44,307,13.0,10.8,75.2,0.022
+Lounge,theme_lounge,First Class,21,9,1,11,42.9,4.8,52.4,0.381
+Lounge,theme_lounge,Premium Economy,2,1,0,1,50.0,0.0,50.0,0.5
+Lounge,theme_lounge,All Cabins,778,211,141,419,27.1,18.1,53.9,0.09
+Boarding,theme_boarding,Business Class,381,68,75,237,17.8,19.7,62.2,-0.018
+Boarding,theme_boarding,Economy Class,732,106,138,486,14.5,18.9,66.4,-0.044
+Boarding,theme_boarding,First Class,18,3,2,13,16.7,11.1,72.2,0.056
+Boarding,theme_boarding,Premium Economy,4,1,0,3,25.0,0.0,75.0,0.25
+Boarding,theme_boarding,All Cabins,1135,178,215,739,15.7,18.9,65.1,-0.033
+Cleanliness,theme_cleanliness,Business Class,269,63,12,193,23.4,4.5,71.7,0.19
+Cleanliness,theme_cleanliness,Economy Class,579,119,27,433,20.6,4.7,74.8,0.159
+Cleanliness,theme_cleanliness,First Class,23,5,0,18,21.7,0.0,78.3,0.217
+Cleanliness,theme_cleanliness,Premium Economy,2,2,0,0,100.0,0.0,0.0,1.0
+Cleanliness,theme_cleanliness,All Cabins,873,189,39,644,21.6,4.5,73.8,0.172
+Value for Money,theme_value,Business Class,701,407,190,104,58.1,27.1,14.8,0.31
+Value for Money,theme_value,Economy Class,1122,560,413,147,49.9,36.8,13.1,0.131
+Value for Money,theme_value,First Class,34,16,9,9,47.1,26.5,26.5,0.206
+Value for Money,theme_value,Premium Economy,6,6,0,0,100.0,0.0,0.0,1.0
+Value for Money,theme_value,All Cabins,1863,989,612,260,53.1,32.9,14.0,0.202
+Punctuality,theme_punctuality,Business Class,329,79,72,170,24.0,21.9,51.7,0.021
+Punctuality,theme_punctuality,Economy Class,659,174,220,252,26.4,33.4,38.2,-0.07
+Punctuality,theme_punctuality,First Class,18,5,5,7,27.8,27.8,38.9,0.0
+Punctuality,theme_punctuality,Premium Economy,2,2,0,0,100.0,0.0,0.0,1.0
+Punctuality,theme_punctuality,All Cabins,1008,260,297,429,25.8,29.5,42.6,-0.037
