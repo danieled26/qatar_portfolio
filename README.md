@@ -109,7 +109,7 @@ Each complaint and praise carries its cluster label, enabling a product manager 
 
 ### Piece 04 — Power BI Dashboard
 **Data:** Real Skytrax + NLP sentiment + clustering outputs  
-**Live dashboard:** [Embedded in portfolio microsite]
+**Live dashboard:** [Embedded in portfolio microsite] [View PowerBI Dashboard](https://app.powerbi.com/view?r=eyJrIjoiYmQ1ZjYyMjItNDRkZS00MjJjLTk4MDItYTg2NDhhYmM5OWU3IiwidCI6IjkzYWVkYmRjLWNjNjctNDY1Mi1hYTEyLWQyNTBhODc2YWU3OSJ9&pageName=ReportSectiondfe720a64c6cd2186cbd)
 
 Three-page interactive dashboard built for a PDD product manager audience — not a data scientist audience. Every visual answers a question a product team genuinely has.
 
@@ -361,6 +361,6 @@ The propensity model ranks Ground Service above Food & Beverage, Seat Comfort, a
 ## Contact
 
 **Edwin Daniels**  
-[LinkedIn] · [Email] · [Portfolio Microsite]
+[LinkedIn](https://www.linkedin.com/in/edwin-daniels) · [Email](malito:edwin.d.daniels@gmail.com) · [Portfolio Microsite]
 
 *This portfolio was developed independently as part of a job application. All analysis and code is original work. The Skytrax review data was collected via public web scraping for non-commercial analytical purposes.*
