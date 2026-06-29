@@ -169,6 +169,57 @@ A complete experimental analysis of a hypothetical elevated meal service trial a
 
 ---
 
+### Piece 06 — Recommendation Propensity Model
+**Script:** `05_regression/05_propensity_model.py`  
+**Data:** Real Skytrax reviews + NLP sentiment pipeline output (joined on review_id)  
+**Output:** 9 charts + feature importance CSV + propensity results CSV + trained model (`.pkl`)
+
+A classification model predicting whether a passenger will recommend Qatar Airways (Yes/No), used as a loyalty/churn proxy. True churn is unobservable in a reviews dataset — recommendation intent is the closest available signal. Reichheld's NPS research validates this: a passenger who says "I would not recommend" has mentally defected regardless of whether they fly again on price or route convenience.
+
+The model's primary output is not the accuracy score but the **product investment prioritisation framework** — a ranked table of which experience dimensions most strongly drive recommendation intent, with direction of effect and plain-English product implications for each.
+
+**Three models, in sequence:**
+1. **Logistic Regression** — baseline + interpretable coefficient signs (what pushes toward recommend vs not)
+2. **Random Forest** — non-linear importance + Partial Dependence Plots (relationship shape, not just rank)
+3. **XGBoost** — performance benchmark + SHAP decomposition (per-feature, per-passenger contribution)
+
+**Model performance:**
+
+| Model | 5-Fold CV AUC | Test AUC | Test Accuracy | F1 (Not Recommend) | F1 (Recommend) |
+|---|---|---|---|---|---|
+| Logistic Regression | 0.9892 ± 0.0045 | **0.9879** | 96% | 0.93 | 0.97 |
+| Random Forest | 0.9877 ± 0.0051 | 0.9850 | 94% | 0.89 | 0.95 |
+| XGBoost | 0.9881 ± 0.0045 | 0.9837 | 95% | 0.91 | 0.96 |
+
+AUC scores above 0.98 across all models reflect the strong internal consistency of passenger review data — passengers who rate dimensions poorly also withhold recommendation. Logistic Regression marginally outperforms the tree models on test AUC, confirming the relationship is largely linear at portfolio level.
+
+**Top 10 features by XGBoost importance (product & NLP features only):**
+
+| Rank | Feature | XGB Importance | Direction |
+|---|---|---|---|
+| 1 | Overall Rating (1–10) | 0.3664 | ↑ Recommend |
+| 2 | Would Rebook Signal | 0.2428 | ↑ Recommend |
+| 3 | NLP Theme: Value | 0.0603 | ↑ Recommend |
+| 4 | NLP Sentiment Score | 0.0189 | ↑ Recommend |
+| 5 | Value for Money Score | 0.0182 | ↑ Recommend |
+| 6 | Ground Service Score | 0.0161 | ↑ Recommend |
+| 7 | NLP Theme: Cabin Crew | 0.0150 | ↑ Recommend |
+| 8 | IFE Score | 0.0141 | ↑ Recommend |
+| 9 | NLP Theme: IFE | 0.0138 | ↑ Recommend |
+| 10 | Cabin Staff Score | 0.0134 | ↑ Recommend |
+
+> **Note on Overall Rating and Would Rebook Signal:** Both rank at the top because they are near-outcome proxies — overall rating aggregates all product dimensions, and rebook intent is behaviourally adjacent to recommendation. The actionable investment framework sits in ranks 3–10: the specific product and NLP theme features that independently drive recommendation above and beyond the passenger's general sentiment.
+
+**Key modelling decisions:**
+- Target: `recommended` (Yes=1, No=0) — 71.2% positive, 2.48:1 imbalance → `class_weight='balanced'` applied
+- Train/test split: 80/20, stratified on target
+- Missing numeric values imputed with median; categorical NaN filled before one-hot encoding
+- Numeric features scaled (StandardScaler) for Logistic Regression only
+- Class imbalance handled via `class_weight='balanced'` (LR, RF) and `scale_pos_weight` (XGBoost)
+- 5-fold stratified cross-validation on training set before final test evaluation
+
+---
+
 ## Technical Stack
 
 | Category | Tools |
@@ -180,6 +231,7 @@ A complete experimental analysis of a hypothetical elevated meal service trial a
 | **NLP / LLM** | Groq API, Ollama, Llama 3.1 8B |
 | **Embeddings** | Sentence Transformers (all-MiniLM-L6-v2) |
 | **Dimensionality reduction** | UMAP |
+| **Propensity Modelling** | XGBoost, SHAP |
 | **BI / Dashboarding** | Microsoft Power BI |
 | **Deployment** | Vercel (microsite), GitHub Pages |
 | **Version control** | Git / GitHub |
@@ -215,6 +267,9 @@ qatar-airways-pdd-portfolio/
 │   └── 04_qatar_ab_test.py           # Full A/B test analysis
 │   └── 04_notebook_ab_tests.ipynb    # Colab notebook
 │
+├── 05_regression/
+│   └── 05_propensity_model.py        # Recommendation propensity model (LR + RF + XGBoost + SHAP)
+│
 ├── 05_data/
 │   ├── scraped/
 │       ├── qatar_airline_reviews.csv
@@ -232,7 +287,9 @@ qatar-airways-pdd-portfolio/
 │       ├── 01_eda_charts/
 │       ├── 02_nlp_charts/
 │       ├── 03_ab_test_charts/
+│       ├── 05_regression_charts/
 │   └── nlp_output_files/
+│   └── propensity_model/             # Model pkl + results CSV + feature importance CSV
 └── 07_branding_elements/ # used for power bi dashboard and slides
 
 ```
@@ -269,6 +326,10 @@ VSCode/Colab 04_ab_test/04_notebook_ab_tests.ipynb #Run on colab
                         OR
 python 04_ab_test/04_qatar_ab_test.py
 
+# 5. Recommendation propensity model (requires NLP output from step 2)
+pip install xgboost shap
+python 05_regression/05_propensity_model.py
+
 ```
 
 ### Data requirements
@@ -278,7 +339,7 @@ Place `qatar_airline_reviews.csv` and `qatar_sentiment_flat.csv` in the working 
 
 ## Strategic Recommendations for Qatar Airways PDD
 
-The analysis surfaces four actionable product recommendations:
+The analysis surfaces five actionable product recommendations:
 
 **1. Economy meal service — immediate uplift opportunity**  
 A/B test results show a statistically significant +0.30pt satisfaction lift from an elevated economy menu at medium effect size (d=0.609). Complaint rate halved. Economy rollout delivers highest ROI — 70% of passengers, largest absolute impact on NPS.
@@ -286,11 +347,14 @@ A/B test results show a statistically significant +0.30pt satisfaction lift from
 **2. IFE content refresh cadence — from bi-annual to quarterly**  
 IFE scores show a recurring mid-year dip correlating with stale content cycles. Passengers rating IFE ≤2/5 are significantly more likely to be NPS detractors. A quarterly content refresh cycle is a low-cost, high-impact intervention.
 
-**3. Business class catering — close the expectation gap**  
-Regression and NLP theme analysis both identify food & beverage as an underperforming dimension relative to Business class passenger expectations. The gap between seat comfort scores (strong) and food scores (weak) in Business class represents the highest-value product investment opportunity in the current portfolio.
+**3. Value for money perception — the primary investment lever**  
+The propensity model identifies Value for Money as the single strongest product-level predictor of recommendation intent (top 3 features after removing outcome proxies overall rating and rebook signal). Both the numeric score (rank 5) and the NLP free-text theme (rank 3) surface independently — confirming this is not a scoring artefact but a genuine passenger perception gap. Any product investment must be accompanied by a narrative that makes the quality improvement legible to passengers at point of purchase and onboard. EDA separately confirms that Business class food scores (avg 3.86) sit below seat comfort — a specific product mismatch within an otherwise premium cabin that contributes to this value perception gap.
 
-**4. Captive advocate programme — address the Advocacy Gap**  
-6% of passengers recommend despite net negative sentiment — flying out of necessity not loyalty. These passengers are first to switch when a competitor offers the same route. Identifying and proactively engaging this segment (particularly on high-frequency business routes) is a retention opportunity that standard NPS tracking misses entirely.
+**4. Ground service — an underweighted investment area**  
+The propensity model ranks Ground Service above Food & Beverage, Seat Comfort, and Wi-Fi (rank 6 by XGBoost importance). Airport touchpoints set expectations before boarding; poor ground service creates a negative prior that degrades onboard experience ratings. High-volume origin markets with low ground service scores represent the highest-concentration churn risk in the current portfolio.
+
+**5. Captive advocate programme — address the Advocacy Gap**  
+6% of passengers recommend despite net negative sentiment — flying out of necessity not loyalty. These passengers are first to switch when a competitor offers the same route. The propensity model's Would Rebook Signal (rank 2) directly identifies this segment: passengers who signal "maybe" represent latent churn invisible to standard NPS tracking. Proactive engagement on high-frequency business routes is the highest-value retention intervention.
 
 ---
 

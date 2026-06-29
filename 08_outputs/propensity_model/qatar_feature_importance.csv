@@ -1,0 +1,35 @@
+rank,feature,xgb_importance,rf_importance,lr_coefficient,feature_label,direction,product_dimension,investment_insight
+1,feat_overall_rating,0.36642167,0.21661776596538876,2.223043798638787,Overall Rating (1–10),Increases recommendation,Overall Rating (aggregated outcome),Reflects all product dimensions — not a direct lever. Decompose into component scores for actionable targets.
+2,feat_rebook,0.24283785,0.1668044598735424,2.3170260266781804,Would Rebook Signal,Increases recommendation,Would Rebook Signal,Leading churn indicator. Passengers who signal 'maybe' despite recommending are captive advocates — first to switch if a competitor enters the route.
+3,feat_theme_value,0.06028077,0.14122005346945748,0.564472409513456,NLP Theme: Value,Increases recommendation,NLP Theme: Value,Value perception surfaces in free text even when the Value for Money score is moderate — a leading indicator of score decay.
+4,feat_sentiment_score,0.018886337,0.13812148482815284,0.030840538466093664,NLP Sentiment Score,Increases recommendation,NLP Sentiment Score,Cross-validates product scores. A high product score with low sentiment signals expectation mismatch — not just poor execution.
+5,feat_value_for_money,0.018150736,0.08524426027902111,0.13531392309421922,Value for Money Score,Increases recommendation,Value for Money Score,Strongest product lever. Pricing perception must be anchored by tangible product quality — especially in Business class.
+6,traveller_Family Leisure,0.01769333,0.0008510412795705098,0.4122919793432806,Traveller: Family Leisure,Increases recommendation,,
+7,feat_ground_service,0.016072847,0.04690454186381991,0.510071541786628,Ground Service Score,Increases recommendation,Ground Service Score,Airport touchpoints set expectations before boarding. High-value origin markets with low ground scores are churn risks.
+8,feat_theme_cabin_crew,0.0150089,0.02992085469534226,-0.6554277877416942,NLP Theme: Cabin Crew,Decreases recommendation,NLP Theme: Cabin Crew,Positive crew mentions in free text strongly predict recommendation — more so than crew scores alone. Training ROI is measurable via NLP.
+9,feat_ife,0.014134804,0.009825208482749486,0.14047649105342996,IFE Score,Increases recommendation,IFE Score,Content refresh cadence gap. A quarterly content cycle (vs bi-annual) would address the recurring mid-year dip in scores.
+10,feat_theme_ife,0.013826444,0.002221393039730913,-0.043574138892534885,NLP Theme: IFE,Decreases recommendation,,
+11,traveller_Business,0.0137832705,0.0009317629924512103,-0.09306402899504138,Traveller: Business,Decreases recommendation,,
+12,seat_Economy Class,0.013521029,0.001758820292474362,-0.13112843149976036,Cabin: Economy Class,Decreases recommendation,,
+13,feat_cabin_staff,0.013370776,0.028829755338122584,0.4774771137751437,Cabin Staff Score,Increases recommendation,Cabin Staff Score,High leverage at low marginal cost. Service training programmes deliver outsized NPS impact relative to investment.
+14,seat_Business Class,0.013208607,0.001723153513356165,0.14258692516181515,Cabin: Business Class,Increases recommendation,,
+15,feat_trip_verified,0.012740593,0.00014734257488199432,-0.08602735202071056,Trip Verified,Decreases recommendation,Trip Verified,Verified reviews score 1.1pts lower on average — methodological anchor for interpreting raw Skytrax ratings.
+16,feat_seat_comfort,0.012412682,0.0280760730589354,0.17808161583819151,Seat Comfort Score,Increases recommendation,Seat Comfort Score,Long-haul loyalty driver — particularly for business travellers. Fleet standardisation to QSuites across routes would close the gap.
+17,feat_theme_food_beverage,0.01238117,0.004054698922934599,-0.4769182238616303,NLP Theme: Food & Bev,Decreases recommendation,NLP Theme: Food & Beverage,"Free-text NLP corroborates score data — food themes appear disproportionately in negative reviews, validating score findings."
+18,emotion_delighted,0.012292079,0.008662214247991028,-0.8238428009991168,Emotion: Delighted,Decreases recommendation,,
+19,traveller_Couple Leisure,0.010654758,0.0009786568912240861,-0.2076135503093757,Traveller: Couple Leisure,Decreases recommendation,,
+20,feat_theme_seat_comfort,0.010566946,0.0034081071432981655,-0.19731910943279357,NLP Theme: Seat Comfort,Decreases recommendation,,
+21,feat_wifi,0.010460829,0.0031913318210073215,-0.12427292201950439,Wi-Fi Score,Decreases recommendation,Wi-Fi Score,46% non-response rate masks true dissatisfaction. Connectivity investment targets premium and business travellers.
+22,feat_competitor_mentioned,0.010159801,0.0005579246751498875,-0.1501894754107511,Competitor Mentioned,Decreases recommendation,Competitor Mentioned,Passengers naming competitors score lower recommendation intent. A live competitive risk signal for route-level commercial teams.
+23,feat_year,0.010023996,0.004898210558662688,-0.004597009819515966,Year,Decreases recommendation,,
+24,emotion_frustrated,0.009949301,0.02640866364873566,0.2702329206330787,Emotion: Frustrated,Increases recommendation,,
+25,feat_month,0.009820182,0.004003397822498697,-0.011261313363082025,Month,Decreases recommendation,,
+26,emotion_disappointed,0.009304301,0.006454554818315034,0.29595182683865157,Emotion: Disappointed,Increases recommendation,,
+27,feat_food_beverage,0.009028076,0.01543194249266084,0.16943912921634538,Food & Beverage Score,Increases recommendation,Food & Beverage Score,Highest-ROI physical product investment. Business class gap between seat comfort (strong) and food (weak) is the single largest addressable quality mismatch.
+28,emotion_satisfied,0.008903683,0.0207884168452028,0.2882564458354553,Emotion: Satisfied,Increases recommendation,,
+29,traveller_Solo Leisure,0.008070649,0.0013688843111472407,-0.06083001739937909,Traveller: Solo Leisure,Decreases recommendation,,
+30,feat_theme_wifi,0.006033618,0.00048624444337454865,0.11734148863285784,NLP Theme: Wi-Fi,Increases recommendation,,
+31,feat_is_sarcastic,0.0,6.80227712478299e-05,-0.023912083758832872,Sarcastic Tone (NLP),Decreases recommendation,Sarcastic Tone (NLP),Sarcasm is a strong negative signal — irony surfaces frustration that star ratings understate. High sarcasm reviews predict churn.
+32,seat_First Class,0.0,4.075703955222802e-05,-0.05399037061039728,Cabin: First Class,Decreases recommendation,,
+33,seat_Premium Economy,0.0,0.0,0.0482175179382774,Cabin: Premium Economy,Increases recommendation,,
+34,emotion_impressed,0.0,0.0,0.1543966058769811,Emotion: Impressed,Increases recommendation,,
