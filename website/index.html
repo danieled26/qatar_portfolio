@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Passenger Experience Analytics — A data-driven investment framework built from 1,957 real reviews. Edwin Daniels.">
+<title>Passenger Experience Analytics — Edwin Daniels</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+<style>
+/* ════════════════════════════════════════════════════
+   RESET & CUSTOM PROPERTIES
+════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --maroon:       #8D1B3D;
+  --maroon-dark:  #6B1330;
+  --maroon-glow:  rgba(141,27,61,0.18);
+  --navy:         #0D1B2A;
+  --navy-mid:     #162538;
+  --steel:        #4A6278;
+  --steel-mid:    #6B8296;
+  --off-white:    #F7F5F2;
+  --white:        #FFFFFF;
+  --grey-dark:    #4A4A4A;
+  --grey-mid:     #888;
+  --grey-light:   #E0DEDa;
+  --positive:     #2E7D5A;
+  --negative:     #C0392B;
+  --gold:         #C9A96E;
+
+  --shadow-sm:    0 2px 12px rgba(0,0,0,0.06);
+  --shadow-md:    0 6px 28px rgba(0,0,0,0.09);
+  --shadow-lg:    0 16px 48px rgba(0,0,0,0.13);
+  --shadow-maroon: 0 8px 32px rgba(141,27,61,0.25);
+  --radius:       14px;
+  --radius-sm:    8px;
+  --ease:         cubic-bezier(0.4,0,0.2,1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--off-white);
+  color: var(--navy);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--off-white); }
+::-webkit-scrollbar-thumb { background: var(--maroon); border-radius: 3px; }
+
+/* ════════════════════════════════════════════════════
+   HERO
+════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0D1B2A 0%, #1b0a14 55%, #30091f 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 7rem 2rem 6rem;
+  overflow: hidden;
+}
+
+/* Diamond-grid geometric pattern */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='72' height='72' viewBox='0 0 72 72' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cpolygon points='36,4 68,36 36,68 4,36' stroke='%238D1B3D' stroke-width='0.6' fill='%238D1B3D' fill-opacity='0.04'/%3E%3Cpolygon points='36,16 56,36 36,56 16,36' stroke='%238D1B3D' stroke-width='0.4' fill='none' stroke-opacity='0.08'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 72px 72px;
+  opacity: 0.9;
+}
+
+/* Radial glow at centre */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(ellipse at center, rgba(141,27,61,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; z-index: 2; max-width: 920px; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(201,169,110,0.1);
+  border: 1px solid rgba(201,169,110,0.25);
+  color: var(--gold);
+  padding: 7px 20px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 2.2rem;
+}
+
+.hero-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse-dot 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.35; transform:scale(0.65); }
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.8rem, 6.5vw, 5.6rem);
+  color: var(--white);
+  line-height: 1.08;
+  margin-bottom: 1.6rem;
+  letter-spacing: -0.01em;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: #e8a0b8;
+}
+
+.hero-sub {
+  font-size: clamp(0.98rem, 1.8vw, 1.18rem);
+  color: rgba(255,255,255,0.58);
+  max-width: 620px;
+  margin: 0 auto 3.5rem;
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+/* Stat row */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0;
+  margin-bottom: 3.8rem;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.hero-stat .h-num {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.hero-stat .h-label {
+  font-size: 0.67rem;
+  color: rgba(255,255,255,0.42);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.hero-divider {
+  width: 1px; height: 44px;
+  background: rgba(255,255,255,0.1);
+}
+
+.hero-author {
+  color: rgba(255,255,255,0.38);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+}
+
+.hero-author strong { color: rgba(255,255,255,0.75); font-weight: 600; }
+
+/* Animated wave at the bottom */
+.hero-wave {
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Scroll cue */
+.scroll-cue {
+  position: absolute;
+  bottom: 2.2rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.4;
+  animation: cue-bounce 2.4s ease-in-out infinite;
+}
+
+.scroll-cue span {
+  font-size: 0.62rem;
+  color: white;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@keyframes cue-bounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(9px); }
+}
+
+/* ════════════════════════════════════════════════════
+   STICKY NAV
+════════════════════════════════════════════════════ */
+.nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(247,245,242,0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(141,27,61,0.1);
+  transition: box-shadow 0.3s var(--ease);
+}
+
+.nav-wrap.shadowed { box-shadow: 0 3px 24px rgba(0,0,0,0.09); }
+
+.nav {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.nav-brand {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--maroon);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.nav-brand span { color: var(--steel); font-weight: 400; }
+
+.tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  padding: 1.05rem 1.15rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--grey-dark);
+  cursor: pointer;
+  border: none;
+  background: none;
+  white-space: nowrap;
+  position: relative;
+  letter-spacing: 0.01em;
+  transition: color 0.25s var(--ease);
+}
+
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 1rem; right: 1rem;
+  height: 2px;
+  background: var(--maroon);
+  border-radius: 2px 2px 0 0;
+  transform: scaleX(0);
+  transition: transform 0.28s var(--ease);
+}
+
+.tab-btn:hover { color: var(--maroon); }
+.tab-btn.active { color: var(--maroon); font-weight: 700; }
+.tab-btn.active::after { transform: scaleX(1); }
+
+/* ════════════════════════════════════════════════════
+   TAB PANELS
+════════════════════════════════════════════════════ */
+.panel { display: none; animation: panel-in 0.38s var(--ease); }
+.panel.active { display: block; }
+
+@keyframes panel-in {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ════════════════════════════════════════════════════
+   LAYOUT HELPERS
+════════════════════════════════════════════════════ */
+.container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 4.5rem 2rem;
+}
+
+.container-narrow {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/* ════════════════════════════════════════════════════
+   SECTION HEADER
+════════════════════════════════════════════════════ */
+.eyebrow {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--maroon);
+  margin-bottom: 0.55rem;
+}
+
+.section-h {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 3.8vw, 3rem);
+  line-height: 1.18;
+  color: var(--navy);
+  margin-bottom: 1.1rem;
+}
+
+.section-lead {
+  font-size: 1.05rem;
+  color: var(--grey-dark);
+  line-height: 1.75;
+  font-weight: 300;
+  max-width: 700px;
+}
+
+.section-head { margin-bottom: 3rem; }
+
+/* ════════════════════════════════════════════════════
+   KPI GRID
+════════════════════════════════════════════════════ */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 3.5rem;
+}
+
+.kpi-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.6rem 1.4rem;
+  box-shadow: var(--shadow-sm);
+  border-top: 3px solid var(--maroon);
+  transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 60px; height: 60px;
+  background: radial-gradient(circle at top right, var(--maroon-glow), transparent 70%);
+}
+
+.kpi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+
+.kpi-num {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: var(--maroon);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.kpi-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--steel);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.kpi-sub {
+  font-size: 0.78rem;
+  color: var(--grey-mid);
+  line-height: 1.4;
+}
+
+/* ════════════════════════════════════════════════════
+   INSIGHT BOX
+════════════════════════════════════════════════════ */
+.insight {
+  background: var(--white);
+  border-left: 4px solid var(--maroon);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.6rem 2rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2.8rem;
+}
+
+.insight-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--maroon);
+  margin-bottom: 0.5rem;
+}
+
+.insight-body {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.6;
+}
+
+.insight-sub {
+  font-size: 0.85rem;
+  color: var(--grey-dark);
+  margin-top: 0.55rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* ════════════════════════════════════════════════════
+   METHOD CARDS
+════════════════════════════════════════════════════ */
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+  margin-top: 3rem;
+}
+
+.method-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  box-shadow: var(--shadow-sm);
+  border-top: 3px solid var(--steel);
+  transition: border-color 0.25s, transform 0.25s var(--ease), box-shadow 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+
+.method-card:hover {
+  border-top-color: var(--maroon);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.method-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+.method-card h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+
+.method-card p {
+  font-size: 0.82rem;
+  color: var(--grey-dark);
+  line-height: 1.65;
+  flex: 1;
+}
+
+.method-result {
+  margin-top: 1.1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--grey-light);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--maroon);
+  letter-spacing: 0.01em;
+}
+
+/* ════════════════════════════════════════════════════
+   CHART CARDS
+════════════════════════════════════════════════════ */
+.chart-grid   { display: grid; gap: 1.4rem; margin-bottom: 2rem; }
+.cols-1       { grid-template-columns: 1fr; }
+.cols-2       { grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); }
+.cols-3       { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+.chart-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  cursor: zoom-in;
+  transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
+}
+
+.chart-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+.chart-card img { width: 100%; height: auto; display: block; }
+
+.chart-cap {
+  padding: 1rem 1.3rem;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.chart-cap strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.2rem;
+}
+
+.chart-cap span { font-size: 0.75rem; color: var(--steel-mid); line-height: 1.45; }
+
+/* ════════════════════════════════════════════════════
+   WORD CLOUDS
+════════════════════════════════════════════════════ */
+.wc-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-bottom: 2rem; }
+
+.wc-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  cursor: zoom-in;
+  transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
+}
+
+.wc-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+
+.wc-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.74rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+
+.wc-pos { background: rgba(46,125,90,0.07); color: var(--positive); border-bottom: 2px solid var(--positive); }
+.wc-neg { background: rgba(192,57,43,0.07); color: var(--negative); border-bottom: 2px solid var(--negative); }
+
+.wc-card img { width: 100%; height: auto; display: block; }
+
+/* ════════════════════════════════════════════════════
+   BANNER (result strip)
+════════════════════════════════════════════════════ */
+.result-strip {
+  background: linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+  border-radius: var(--radius);
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.4rem 0;
+  margin-bottom: 2.8rem;
+  box-shadow: var(--shadow-maroon);
+}
+
+.rs-stat { text-align: center; padding: 0 1.5rem; }
+
+.rs-big {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.rs-label {
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.58);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 5px;
+}
+
+.rs-div { width: 1px; height: 48px; background: rgba(255,255,255,0.15); }
+
+/* ════════════════════════════════════════════════════
+   DASHBOARD EMBED
+════════════════════════════════════════════════════ */
+.embed-shell {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.embed-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.7rem 1.3rem;
+  background: var(--navy-mid);
+  color: rgba(255,255,255,0.6);
+  font-size: 0.73rem;
+}
+
+.live-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  margin-right: 6px;
+  animation: pulse-dot 2s infinite;
+}
+
+.embed-shell iframe {
+  width: 100%;
+  height: 78vh;
+  min-height: 540px;
+  border: none;
+  display: block;
+}
+
+/* ════════════════════════════════════════════════════
+   RECOMMENDATION LIST
+════════════════════════════════════════════════════ */
+.rec-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 2.5rem; }
+
+.rec-item {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.3rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.rec-item:hover { box-shadow: var(--shadow-md); transform: translateX(4px); }
+
+.rec-num {
+  flex-shrink: 0;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--maroon);
+  color: white;
+  font-weight: 800;
+  font-size: 0.82rem;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.rec-body h4 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.3rem;
+}
+
+.rec-body p { font-size: 0.8rem; color: var(--grey-dark); line-height: 1.55; }
+
+/* ════════════════════════════════════════════════════
+   TAGS / BADGES
+════════════════════════════════════════════════════ */
+.tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.tag-red  { background: rgba(192,57,43,0.1);  color: var(--negative); }
+.tag-gold { background: rgba(201,169,110,0.12); color: #9A7A3D; }
+.tag-teal { background: rgba(46,125,90,0.1);  color: var(--positive); }
+.tag-grey { background: rgba(74,98,120,0.1);  color: var(--steel); }
+
+/* ════════════════════════════════════════════════════
+   LIGHTBOX
+════════════════════════════════════════════════════ */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(5,8,15,0.94);
+  z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.22s var(--ease);
+}
+
+.lightbox.open { opacity: 1; pointer-events: all; }
+
+.lightbox img {
+  max-width: 92vw; max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 24px 72px rgba(0,0,0,0.6);
+  animation: lb-in 0.22s var(--ease);
+}
+
+@keyframes lb-in {
+  from { transform:scale(0.92); opacity:0; }
+  to   { transform:scale(1);    opacity:1; }
+}
+
+.lb-close {
+  position: absolute; top: 1.4rem; right: 1.4rem;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white; font-size: 1.1rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+
+.lb-close:hover { background: rgba(255,255,255,0.18); }
+
+/* ════════════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════════════ */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.5);
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+}
+
+.footer-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+
+.footer-role { font-size: 0.82rem; color: rgba(255,255,255,0.38); letter-spacing: 0.04em; margin-bottom: 2rem; }
+
+.footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+
+.footer-links a {
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: white; }
+
+.footer-stack {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.stack-tag {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.footer-note { font-size: 0.7rem; opacity: 0.28; max-width: 520px; margin: 0 auto; line-height: 1.65; }
+
+/* ════════════════════════════════════════════════════
+   UTILITIES
+════════════════════════════════════════════════════ */
+.mt-sm  { margin-top: 1.5rem; }
+.mt-md  { margin-top: 2.5rem; }
+.mt-lg  { margin-top: 3.5rem; }
+.mb-sm  { margin-bottom: 1.5rem; }
+.mb-md  { margin-bottom: 2.5rem; }
+
+/* ════════════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .wc-pair     { grid-template-columns: 1fr; }
+  .cols-2      { grid-template-columns: 1fr; }
+  .cols-3      { grid-template-columns: 1fr; }
+  .result-strip { flex-direction: column; text-align: center; }
+  .rs-div      { display: none; }
+}
+
+@media (max-width: 680px) {
+  .nav-brand   { display: none; }
+  .kpi-grid    { grid-template-columns: 1fr 1fr; }
+  .method-grid { grid-template-columns: 1fr; }
+  .hero-divider { display: none; }
+  .hero h1     { font-size: 2.6rem; }
+  .hero-stat   { padding: 0 1rem; }
+}
+
+@media (max-width: 420px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════ -->
+<section class="hero" aria-label="Portfolio introduction">
+  <div class="hero-inner">
+
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Senior Data Specialist Application &nbsp;·&nbsp; Product Development &amp; Design
+    </div>
+
+    <h1>Turning <em>Passenger Voice</em><br>Into Product Strategy</h1>
+
+    <p class="hero-sub">
+      A quantitative investment framework built from 1,957 real passenger reviews —
+      combining exploratory analysis, LLM-powered NLP, predictive modelling, and
+      controlled experimentation to answer one question: <em>which product improvements actually move loyalty?</em>
+    </p>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="h-num">1,957</span>
+        <span class="h-label">Real Reviews</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <span class="h-num">10yr</span>
+        <span class="h-label">Time Span</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <span class="h-num">0.988</span>
+        <span class="h-label">Model AUC</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <span class="h-num">5</span>
+        <span class="h-label">Analytical Models</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <span class="h-num">96%</span>
+        <span class="h-label">Test Accuracy</span>
+      </div>
+    </div>
+
+    <p class="hero-author">Presented by <strong>Edwin Daniels</strong> &nbsp;·&nbsp; Data Specialist</p>
+  </div>
+
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg"
+         preserveAspectRatio="none" style="width:100%;display:block;fill:#F7F5F2">
+      <path d="M0,45 C180,90 360,0 540,45 C720,90 900,0 1080,45 C1260,90 1350,20 1440,45 L1440,90 L0,90 Z"/>
+    </svg>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true">
+    <span>Explore</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+         stroke="white" stroke-width="2.2" stroke-linecap="round">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     STICKY NAV
+══════════════════════════════════════════════════ -->
+<div class="nav-wrap" id="stickyNav">
+  <nav class="nav" role="navigation" aria-label="Analysis sections">
+    <div class="nav-brand">Passenger <span>Analytics</span></div>
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" role="tab" data-panel="overview"   aria-selected="true">Overview</button>
+      <button class="tab-btn"        role="tab" data-panel="dashboard"                      >Live Dashboard</button>
+      <button class="tab-btn"        role="tab" data-panel="voice"                          >Passenger Voice</button>
+      <button class="tab-btn"        role="tab" data-panel="performance"                    >Performance</button>
+      <button class="tab-btn"        role="tab" data-panel="framework"                      >Investment Model</button>
+      <button class="tab-btn"        role="tab" data-panel="experiment"                     >A/B Experiment</button>
+    </div>
+  </nav>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PANEL 1 — OVERVIEW
+══════════════════════════════════════════════════ -->
+<section id="panel-overview" class="panel active" role="tabpanel">
+<div class="container">
+
+  <div class="section-head">
+    <div class="eyebrow">Executive Summary</div>
+    <h2 class="section-h">2024 is the worst-rated year on record.<br>Here is why — and what to do about it.</h2>
+    <p class="section-lead">
+      Every chart and model in this portfolio starts from the same mandate a PDD team genuinely has:
+      <em>identify the product investments that actually move recommendation rate</em> —
+      not as a vanity metric, but as the closest observable proxy for passenger loyalty.
+    </p>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-num" data-count="1957">1,957</div>
+      <div class="kpi-label">Real Reviews</div>
+      <div class="kpi-sub">Skytrax · May 2016 – Jun 2026 · Scraped directly, not aggregated</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num" data-count="5.8" data-dp="1" style="color:var(--negative)">5.8/10</div>
+      <div class="kpi-label">2024 Avg Rating</div>
+      <div class="kpi-sub">−2.4 pts from 2021 peak — worst year on record in the dataset</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num" data-count="71.2" data-dp="1">71.2%</div>
+      <div class="kpi-label">Recommend Rate</div>
+      <div class="kpi-sub">PSI 65/100 — 6-point Advocacy Gap signals latent churn</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">r = 0.86</div>
+      <div class="kpi-label">Value Correlation</div>
+      <div class="kpi-sub">Value for Money is the single strongest predictor of recommendation (Pearson)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">0.988</div>
+      <div class="kpi-label">Model AUC</div>
+      <div class="kpi-sub">Logistic Regression propensity model · 5-fold stratified CV · n=1,957</div>
+    </div>
+  </div>
+
+  <!-- Central finding -->
+  <div class="insight">
+    <div class="insight-label">The Central Finding</div>
+    <div class="insight-body">
+      Value for Money perception — not seat comfort, not catering — is the primary driver of recommendation intent.
+      The propensity model surfaces this independently across both quantitative product scores and LLM-extracted free-text themes.
+    </div>
+    <div class="insight-sub">
+      This is counter-intuitive for a premium carrier. It means product investment alone is insufficient —
+      the quality improvement must be made legible to passengers at point of purchase and onboard.
+      A great product that passengers cannot perceive as valuable will not move NPS.
+    </div>
+  </div>
+
+  <!-- Method cards -->
+  <div class="eyebrow mt-lg">The Analytical Approach</div>
+  <div class="method-grid">
+    <div class="method-card">
+      <div class="method-icon">📊</div>
+      <h3>Exploratory Data Analysis</h3>
+      <p>12-chart deep-dive across temporal trends, cabin performance, satisfaction drivers, aircraft analysis, geographic intelligence, and value perception. Built with Pandas, Matplotlib, and Seaborn.</p>
+      <div class="method-result">→ 2024 rating collapse · First Class food anomaly · 46% Wi-Fi signal gap</div>
+    </div>
+    <div class="method-card">
+      <div class="method-icon">🧠</div>
+      <h3>LLM Sentiment Pipeline</h3>
+      <p>Llama 3.1 8B via Groq API / Ollama replacing VADER and TextBlob. 40+ structured fields per review — sarcasm detection, competitor mentions, rebook intent, and product theme classification across 10 dimensions.</p>
+      <div class="method-result">→ PSI 65 vs Rec Rate 71% — the 6-point Advocacy Gap identified</div>
+    </div>
+    <div class="method-card">
+      <div class="method-icon">🔍</div>
+      <h3>Semantic Complaint Clustering</h3>
+      <p>Sentence embeddings (MiniLM-L6-v2) plus K-Means to surface semantically identical complaints as single product failures. "Rude staff" and "dismissive crew" are the same issue — raw frequency tables miss this.</p>
+      <div class="method-result">→ True complaint scale previously understated by dispersed phrasing</div>
+    </div>
+    <div class="method-card">
+      <div class="method-icon">🎯</div>
+      <h3>Recommendation Propensity Model</h3>
+      <p>Logistic Regression + Random Forest + XGBoost predicting recommendation intent. SHAP decomposition per passenger. Output: a ranked product investment framework — not just a model score.</p>
+      <div class="method-result">→ AUC 0.988 · Value for Money emerges as the primary lever</div>
+    </div>
+    <div class="method-card">
+      <div class="method-icon">🧪</div>
+      <h3>A/B Experiment Analysis</h3>
+      <p>Full experimental analysis of an elevated economy meal service trial across 4 routes over 4 months. t-test, Mann-Whitney U, Chi-squared, Shapiro-Wilk, Cohen's d, 95% CI — and a financial business case projection.</p>
+      <div class="method-result">→ +0.30pt lift · d=0.609 · p&lt;0.001 · Roll out with high confidence</div>
+    </div>
+    <div class="method-card">
+      <div class="method-icon">📱</div>
+      <h3>Power BI Dashboard</h3>
+      <p>Three-page interactive dashboard designed for a product manager audience. Every visual answers a genuine PDD question. All NLP pipeline outputs are Power BI-ready CSVs with custom DAX measures.</p>
+      <div class="method-result">→ PSI · Advocacy Gap · YoY Rating Change · Propensity scores</div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     PANEL 2 — LIVE DASHBOARD
+══════════════════════════════════════════════════ -->
+<section id="panel-dashboard" class="panel" role="tabpanel">
+<div class="container">
+
+  <div class="section-head">
+    <div class="eyebrow">Power BI · Interactive · Live Data</div>
+    <h2 class="section-h">A product manager dashboard —<br>not a data science report.</h2>
+    <p class="section-lead">
+      Three pages, each answering a question a PDD team actually asks.
+      Filter by cabin class, route, aircraft type, and time period.
+      Every metric is framed as a product implication, not a statistical result.
+    </p>
+  </div>
+
+  <div class="result-strip mb-md">
+    <div class="rs-stat"><span class="rs-big">Page 1</span><span class="rs-label">The Big Picture</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">Page 2</span><span class="rs-label">Passenger Voice</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">Page 3</span><span class="rs-label">Route Intelligence</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">Live</span><span class="rs-label">Real Skytrax Data</span></div>
+  </div>
+
+  <div class="embed-shell">
+    <div class="embed-bar">
+      <span><span class="live-dot"></span>Connected · Power BI Service · Public embed</span>
+      <span>Use the filters inside the dashboard to drill by cabin, route, and aircraft</span>
+    </div>
+    <iframe
+      title="Passenger Experience Analytics Dashboard"
+      src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYmQ1ZjYyMjItNDRkZS00MjJjLTk4MDItYTg2NDhhYmM5OWU3IiwidCI6IjkzYWVkYmRjLWNjNjctNDY1Mi1hYTEyLWQyNTBhODc2YWU3OSJ9&pageName=ReportSectiondfe720a64c6cd2186cbd"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div class="insight mt-sm">
+    <div class="insight-label">Dashboard Design Principle</div>
+    <div class="insight-body">
+      Every metric has a product implication framed in PDD language — not "sentiment score declined"
+      but "passengers are recommending without loyalty: competitive route entry risk."
+    </div>
+    <div class="insight-sub">
+      Key DAX measures: Passenger Sentiment Index (PSI) · Advocacy Gap · YoY Rating Change ·
+      Recommendation Propensity · Sarcasm Flag Rate. All sourced from the Python NLP pipeline —
+      no manual data entry, fully reproducible.
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     PANEL 3 — PASSENGER VOICE
+══════════════════════════════════════════════════ -->
+<section id="panel-voice" class="panel" role="tabpanel">
+<div class="container">
+
+  <div class="section-head">
+    <div class="eyebrow">NLP Sentiment · LLM-Powered · 1,957 Reviews</div>
+    <h2 class="section-h">What passengers say<br>and what they actually mean.</h2>
+    <p class="section-lead">
+      Traditional keyword approaches (VADER, TextBlob) miss context, irony, and aviation-specific nuance.
+      A Llama 3.1 8B pipeline extracts 40+ structured fields per review — including sarcasm detection
+      and competitor mentions — for sentiment that reflects intent, not just words.
+    </p>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">The Advocacy Gap — Primary Finding</div>
+    <div class="insight-body">
+      Passenger Sentiment Index 65/100 trails Recommendation Rate 71% by 6 points.
+      A measurable segment recommends despite net negative sentiment — flying out of necessity, not loyalty.
+    </div>
+    <div class="insight-sub">
+      These captive advocates are first to defect when a competitor enters the route.
+      Standard NPS tracking misses this entirely because it only captures recommendation rate,
+      not the emotional valence behind it. The propensity model's Would Rebook Signal identifies them.
+    </div>
+  </div>
+
+  <div class="eyebrow mb-sm">What Passengers Praise &amp; Complain About</div>
+
+  <div class="wc-pair">
+    <div class="wc-card" onclick="lb(this.querySelector('img'))">
+      <div class="wc-header wc-pos">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        What Passengers Praise
+      </div>
+      <img src="./assets/charts/nlp/qatar_wordcloud_positive.jpg" alt="Positive passenger sentiment word cloud" loading="lazy">
+    </div>
+    <div class="wc-card" onclick="lb(this.querySelector('img'))">
+      <div class="wc-header wc-neg">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        What Passengers Complain About
+      </div>
+      <img src="./assets/charts/nlp/qatar_wordcloud_negative.jpg" alt="Negative passenger sentiment word cloud" loading="lazy">
+    </div>
+  </div>
+
+  <div class="chart-grid cols-1">
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/nlp/qatar_sentiment_trends.jpg" alt="Sentiment trends over time" loading="lazy">
+      <div class="chart-cap">
+        <strong>Passenger Sentiment Index — Monthly Trend</strong>
+        <span>PSI consistently trails recommendation rate — the widening gap pinpoints when captive advocate pressure increased</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-grid cols-1 mt-sm">
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/nlp/fig_clusters_frequency.jpg" alt="Complaint and praise clusters" loading="lazy">
+      <div class="chart-cap">
+        <strong>Semantically Clustered Complaints &amp; Praises</strong>
+        <span>
+          Sentence embeddings group "rude staff", "dismissive crew", and "unhelpful attendant" as a single product failure —
+          revealing the true scale of each issue that raw frequency tables understate
+        </span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     PANEL 4 — PERFORMANCE
+══════════════════════════════════════════════════ -->
+<section id="panel-performance" class="panel" role="tabpanel">
+<div class="container">
+
+  <div class="section-head">
+    <div class="eyebrow">Exploratory Data Analysis · 12 Charts · 10 Years of Data</div>
+    <h2 class="section-h">The performance picture<br>behind the rating decline.</h2>
+    <p class="section-lead">
+      A complete EDA across temporal trends, cabin performance, satisfaction drivers, aircraft analysis,
+      geographic intelligence, and value perception. Every chart answers a product question —
+      not a statistical one.
+    </p>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">Counter-Intuitive Anomaly — First Class Food</div>
+    <div class="insight-body">
+      First Class food scores (avg 3.86/5) sit below the Economy average (3.75/5).
+      The premium cabin delivers a worse food experience relative to passenger expectations than the standard cabin.
+    </div>
+    <div class="insight-sub">
+      This is not a data artefact — it reflects a structural mismatch between First Class passenger expectations
+      and actual delivery. High expectations + moderate delivery = lower perceived score, even when the absolute
+      quality is higher than Economy.
+    </div>
+  </div>
+
+  <div class="chart-grid cols-1">
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/eda/fig02_rating_decline_story.jpg" alt="Rating decline story 2016-2026" loading="lazy">
+      <div class="chart-cap">
+        <strong>The Rating Decline Story — 2016 to 2026</strong>
+        <span>2024 is the worst-rated year on record — a 2.4-point fall from the 2021 peak. The product team has a narrowing window to reverse this trajectory.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-grid cols-2 mt-sm">
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/eda/fig04_score_drivers.jpg" alt="Satisfaction score drivers" loading="lazy">
+      <div class="chart-cap">
+        <strong>What Drives Overall Satisfaction</strong>
+        <span>Value for Money (r = 0.86) dominates all other predictors — a finding later validated independently by the propensity model</span>
+      </div>
+    </div>
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/eda/fig10_value_perception.jpg" alt="Value perception by cabin class" loading="lazy">
+      <div class="chart-cap">
+        <strong>Value Perception by Cabin Class</strong>
+        <span>Business class passengers perceive the lowest value — the expectation gap is widest precisely where the product investment is highest</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-grid cols-1 mt-sm">
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/eda/fig03_cabin_performance.jpg" alt="Cabin performance comparison" loading="lazy">
+      <div class="chart-cap">
+        <strong>Cabin Performance Across All Dimensions</strong>
+        <span>Score breakdown by cabin class — surfaces where each cabin over- and under-delivers relative to its passenger expectation baseline</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-grid cols-1 mt-sm">
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/eda/fig12_executive_summary.jpg" alt="EDA executive summary" loading="lazy">
+      <div class="chart-cap">
+        <strong>EDA Executive Summary</strong>
+        <span>All dimensions ranked, all anomalies flagged, all product implications surfaced — the full picture in one view</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     PANEL 5 — INVESTMENT MODEL
+══════════════════════════════════════════════════ -->
+<section id="panel-framework" class="panel" role="tabpanel">
+<div class="container">
+
+  <div class="section-head">
+    <div class="eyebrow">Propensity Model · LR + RF + XGBoost + SHAP · AUC 0.988</div>
+    <h2 class="section-h">Which investments actually move<br>recommendation rate?</h2>
+    <p class="section-lead">
+      Three models predict recommendation intent (Yes / No) using product scores, NLP sentiment themes,
+      and behavioural signals. The output is not an accuracy score.
+      It is a <em>ranked product investment prioritisation framework</em> — which dimensions drive loyalty,
+      in which direction, by how much.
+    </p>
+  </div>
+
+  <div class="result-strip">
+    <div class="rs-stat"><span class="rs-big">0.988</span><span class="rs-label">Logistic Regression AUC</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">0.985</span><span class="rs-label">Random Forest AUC</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">0.984</span><span class="rs-label">XGBoost AUC</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">96%</span><span class="rs-label">Test Accuracy</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">1,565</span><span class="rs-label">Training Passengers</span></div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">The Investment Insight</div>
+    <div class="insight-body">
+      Value for Money is the primary product lever — ranking 3rd and 5th independently as both an NLP free-text
+      theme and a quantitative score. Ground Service ranks above Food &amp; Beverage, Seat Comfort, and Wi-Fi,
+      challenging the conventional assumption about catering as the headline investment priority.
+    </div>
+    <div class="insight-sub">
+      Overall Rating (rank 1) and Would Rebook Signal (rank 2) are outcome proxies, not levers.
+      The actionable investment framework begins at rank 3: Value theme → Sentiment Score → Value score → Ground Service.
+      This is what the data says to invest in.
+    </div>
+  </div>
+
+  <div class="chart-grid cols-1">
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/regression/fig_09_investment_framework.jpg" alt="Product investment prioritisation framework" loading="lazy">
+      <div class="chart-cap">
+        <strong>Product Investment Prioritisation Framework</strong>
+        <span>Product and NLP features ranked by XGBoost importance · Green = increases recommendation probability · Red = decreases it · Hover to enlarge</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-grid cols-2 mt-sm">
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/regression/fig_04_feature_importance_xgboost.jpg" alt="XGBoost feature importance" loading="lazy">
+      <div class="chart-cap">
+        <strong>Feature Importance — XGBoost</strong>
+        <span>Top 20 predictors of recommendation intent, ranked by model-assigned importance score</span>
+      </div>
+    </div>
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/regression/fig_07_shap_summary.jpg" alt="SHAP decomposition summary" loading="lazy">
+      <div class="chart-cap">
+        <strong>SHAP Decomposition — Per-Feature Impact Direction</strong>
+        <span>Direction and magnitude of each feature's contribution to individual predictions · Red = high feature value · Blue = low</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ranked recommendations -->
+  <div class="eyebrow mt-lg">Strategic Recommendations — Ranked by Model Evidence</div>
+
+  <div class="rec-list">
+    <div class="rec-item">
+      <div class="rec-num">1</div>
+      <div class="rec-body">
+        <h4>Value for Money Perception <span class="tag tag-red">Primary Lever</span></h4>
+        <p>Both the numeric score (rank 5) and NLP free-text theme (rank 3) surface independently in the model.
+        Product investment is insufficient without a value narrative — passengers must be able to perceive the improvement as worth the fare.</p>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">2</div>
+      <div class="rec-body">
+        <h4>Ground Service <span class="tag tag-red">Underweighted Investment Area</span></h4>
+        <p>Ranks above Food &amp; Beverage, Seat Comfort, and Wi-Fi by XGBoost importance.
+        Airport touchpoints set passenger expectations before boarding; low ground service scores create a negative prior
+        that depresses all subsequent onboard ratings.</p>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">3</div>
+      <div class="rec-body">
+        <h4>IFE Content Refresh — From Bi-Annual to Quarterly <span class="tag tag-gold">Medium Impact</span></h4>
+        <p>IFE scores show a recurring mid-year dip correlated with stale content cycles.
+        Passengers rating IFE ≤2/5 are significantly more likely to be NPS detractors.
+        A quarterly refresh cycle is a low-cost, high-frequency intervention.</p>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">4</div>
+      <div class="rec-body">
+        <h4>Captive Advocate Programme — Address the Advocacy Gap <span class="tag tag-red">Retention Risk</span></h4>
+        <p>The Would Rebook Signal (rank 2 by feature importance) identifies passengers who signal "maybe" —
+        flying out of route necessity, not product loyalty. These are first to switch when a competitor enters.
+        Standard NPS tracking is blind to this segment.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     PANEL 6 — A/B EXPERIMENT
+══════════════════════════════════════════════════ -->
+<section id="panel-experiment" class="panel" role="tabpanel">
+<div class="container">
+
+  <div class="section-head">
+    <div class="eyebrow">Controlled Experiment · n=6,000 · 4 Routes · 4 Months</div>
+    <h2 class="section-h">Does the intervention work?<br>Yes. Roll out with high confidence.</h2>
+    <p class="section-lead">
+      A complete experimental analysis of an elevated economy meal service trial.
+      Full rigour: balance verification, parametric and non-parametric testing, effect size calculation,
+      subgroup analysis by cabin class, and a financial business case at network scale.
+    </p>
+  </div>
+
+  <div class="result-strip">
+    <div class="rs-stat"><span class="rs-big">+0.30pt</span><span class="rs-label">Satisfaction Lift</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">−46%</span><span class="rs-label">Complaint Rate Drop</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">d = 0.61</span><span class="rs-label">Cohen's d (Medium)</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">p&lt;0.001</span><span class="rs-label">Statistical Significance</span></div>
+    <div class="rs-div"></div>
+    <div class="rs-stat"><span class="rs-big">+10pt</span><span class="rs-label">Finish Rate Lift</span></div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">The Verdict — Roll Out the Treatment Menu</div>
+    <div class="insight-body">
+      Economy class shows the largest lift (d = 0.850, Large effect). First Class lift is negligible —
+      already at the satisfaction ceiling. Economy rollout delivers the highest ROI per dollar of meal cost uplift:
+      70% of passengers, largest absolute impact on NPS.
+    </div>
+    <div class="insight-sub">
+      All six statistical tests — t-test, Mann-Whitney U, Chi-squared, Shapiro-Wilk, Cohen's d, 95% CI —
+      confirm the same direction and magnitude. This is not a marginal result. It is a clear signal.
+    </div>
+  </div>
+
+  <div class="chart-grid cols-1">
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/ab_test/fig_ab_01_overview.jpg" alt="A/B test trial overview" loading="lazy">
+      <div class="chart-cap">
+        <strong>Trial Overview — Control vs Treatment</strong>
+        <span>Satisfaction, complaint rate, and finish rate across all 4 trial routes · Consistent direction across every metric</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-grid cols-2 mt-sm">
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/ab_test/fig_ab_04_business_case.jpg" alt="Financial business case projection" loading="lazy">
+      <div class="chart-cap">
+        <strong>Financial Business Case — Network Scale</strong>
+        <span>Projected NPS lift, revenue impact per seat, and ROI at full network rollout</span>
+      </div>
+    </div>
+    <div class="chart-card" onclick="lb(this.querySelector('img'))">
+      <img src="./assets/charts/ab_test/fig_ab_05_executive_summary.jpg" alt="A/B test executive summary" loading="lazy">
+      <div class="chart-cap">
+        <strong>Executive Summary — Decision Ready</strong>
+        <span>The complete result in one view: what was tested, what was found, what should be done</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-name">Edwin Daniels</div>
+  <div class="footer-role">Senior Data Specialist Application &nbsp;·&nbsp; Product Development &amp; Design</div>
+
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/edwin-daniels" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="mailto:edwin.d.daniels@gmail.com">Email</a>
+    <a href="https://github.com/EdwinDaniels" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
+
+  <div class="footer-stack">
+    <span class="stack-tag">Python 3.12</span>
+    <span class="stack-tag">Pandas · NumPy · SciPy</span>
+    <span class="stack-tag">Scikit-learn</span>
+    <span class="stack-tag">XGBoost · SHAP</span>
+    <span class="stack-tag">Llama 3.1 8B · Groq API</span>
+    <span class="stack-tag">Sentence Transformers</span>
+    <span class="stack-tag">UMAP · K-Means</span>
+    <span class="stack-tag">Matplotlib · Seaborn</span>
+    <span class="stack-tag">Power BI · DAX</span>
+    <span class="stack-tag">Vercel</span>
+  </div>
+
+  <p class="footer-note">
+    All analysis and code is original work developed independently as part of a job application.
+    Real Skytrax review data was collected via public web scraping for non-commercial analytical purposes.
+    Synthetic datasets were generated with statistically realistic distributions to demonstrate full analytical scope.
+  </p>
+</footer>
+
+<!-- ══════════════════════════════════════════════════
+     LIGHTBOX
+══════════════════════════════════════════════════ -->
+<div id="lightbox" class="lightbox" role="dialog" aria-label="Expanded chart view">
+  <button class="lb-close" onclick="closeLb()" aria-label="Close">✕</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════ -->
+<script>
+/* ── Tab switching ───────────────────────────────────── */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels  = document.querySelectorAll('.panel');
+const navEl   = document.getElementById('stickyNav');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.panel;
+
+    tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    panels.forEach(p => p.classList.remove('active'));
+
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+    document.getElementById('panel-' + target).classList.add('active');
+
+    // Scroll to just below the nav
+    const offset = navEl.getBoundingClientRect().bottom + window.scrollY;
+    window.scrollTo({ top: offset, behavior: 'smooth' });
+  });
+});
+
+/* ── Sticky nav shadow ───────────────────────────────── */
+window.addEventListener('scroll', () => {
+  navEl.classList.toggle('shadowed', window.scrollY > 60);
+}, { passive: true });
+
+/* ── Lightbox ────────────────────────────────────────── */
+function lb(img) {
+  document.getElementById('lb-img').src = img.src;
+  document.getElementById('lb-img').alt = img.alt;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLb() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeLb();
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+/* ── Animated counters ───────────────────────────────── */
+function runCounter(el) {
+  const target = parseFloat(el.dataset.count);
+  const dp     = parseInt(el.dataset.dp) || 0;
+  const dur    = 1400;
+  const t0     = performance.now();
+
+  function step(now) {
+    const p  = Math.min((now - t0) / dur, 1);
+    const e  = 1 - Math.pow(1 - p, 3);   // ease-out-cubic
+    const v  = target * e;
+    el.textContent = dp ? v.toFixed(dp) : Math.round(v).toLocaleString();
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// Trigger on first time overview panel becomes visible
+const overviewPanel = document.getElementById('panel-overview');
+const counterEls    = overviewPanel.querySelectorAll('[data-count]');
+let   countersRun   = false;
+
+const counterObs = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting && !countersRun) {
+    countersRun = true;
+    counterEls.forEach(runCounter);
+  }
+}, { threshold: 0.25 });
+
+counterObs.observe(overviewPanel);
+</script>
+
+</body>
+</html>
