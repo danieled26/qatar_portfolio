@@ -26,7 +26,9 @@ Outputs (saved to ./charts/):
 
 # ── IMPORTS ───────────────────────────────────────────────────────────────────
 import os
+import sys
 import warnings
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -39,7 +41,15 @@ from scipy import stats
 from scipy.stats import pearsonr, chi2_contingency
 
 warnings.filterwarnings("ignore")
-os.makedirs("charts", exist_ok=True)
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+SCRIPT_DIR  = Path(__file__).parent
+ROOT        = SCRIPT_DIR.parent
+DATA_CSV    = ROOT / "07_data" / "scraped" / "qatar_airline_reviews.csv"
+CHARTS_DIR  = ROOT / "08_outputs" / "charts" / "01_eda_charts"
+CHARTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── QATAR AIRWAYS OFFICIAL BRAND PALETTE ──────────────────────────────────────
 # Source: Qatar Airways Corporate Identity Guidelines
@@ -128,12 +138,12 @@ plt.rcParams.update({
 })
 
 def save(fig, name, tight=True):
-    path = f"charts/{name}"
+    path = CHARTS_DIR / name
     if tight:
         fig.savefig(path, dpi=180, bbox_inches="tight", facecolor=C["off_white"])
     else:
         fig.savefig(path, dpi=180, facecolor=C["off_white"])
-    print(f"  ✓ Saved {path}")
+    print(f"  Saved {path.name}")
     plt.close(fig)
 
 def subtitle(ax, text):
@@ -167,7 +177,7 @@ def add_watermark(fig, text="Qatar Airways | Skytrax Reviews 2016–2026"):
 # ── LOAD & CLEAN ──────────────────────────────────────────────────────────────
 print("Loading data...")
 
-df = pd.read_csv("qatar_airline_reviews.csv")   # adjust path if needed
+df = pd.read_csv(DATA_CSV)
 
 SCORE_COLS = [
     "seat_comfort", "cabin_staff_service", "food_beverages",
@@ -452,7 +462,7 @@ ax.set_xticks(x + width)
 ax.set_xticklabels(SCORE_LABELS, rotation=30, ha="right", fontsize=9)
 ax.set_ylim(2.5, 5.5)
 ax.set_title("Category Scores by Cabin Class", fontweight="bold")
-subtitle(ax, "First Class food (3.86) lower than Economy (3.75) — anomaly")
+subtitle(ax, "First Class food (3.87) lags Business Class (4.06) — expectation gap in premium cabin")
 ax.set_ylabel("Avg Score (1–5)")
 ax.legend()
 
@@ -608,7 +618,7 @@ ax.legend(fontsize=7, ncol=2)
 # 4e — "Not Rated" (missing score) analysis
 ax = axes[1, 1]
 not_rated_pct = {}
-orig = pd.read_csv("qatar_airline_reviews.csv")
+orig = pd.read_csv(DATA_CSV)
 for col, label in zip(SCORE_COLS, SCORE_LABELS):
     not_rated_pct[label] = (orig[col] == "Not Rated").mean() * 100
 nr = pd.Series(not_rated_pct).sort_values(ascending=True)
@@ -1250,17 +1260,17 @@ ax.set_title("Recommendation", fontweight="bold")
 # Findings narrative
 findings = [
     ("01", C["negative"],
-     "2024: Lowest rated year on record (5.8/10)",
-     "Economy class collapsed to 5.2 avg. Immediate product and service audit warranted."),
+     "2024: Lowest rated year\non record (5.8/10)",
+     "Economy collapsed to 5.2 avg.\nImmediate product audit warranted."),
     ("02", C["maroon"],
-     "Value for Money is #1 CSAT predictor (r=0.86)",
-     "Strongest correlation in dataset. Price perception drives recommendation more than any service element."),
+     "Value for Money is the\n#1 CSAT driver (r = 0.86)",
+     "Price perception drives recommendation\nmore than any onboard service element."),
     ("03", C["steel_dark"],
-     "First Class food (3.86) rated below Economy (3.75)",
-     "Counter-intuitive anomaly. Elevated passenger expectations in premium cabins not met by catering."),
+     "First Class food (3.87)\nlags Business Class (4.06)",
+     "Premium cabin catering underperforms\nrelative to elevated expectations and fare."),
     ("04", C["steel_mid"],
-     "Wi-Fi: 46% data missing — a product gap signal",
-     "High non-response rate suggests passengers are not using or not finding Wi-Fi — adoption or quality issue."),
+     "Wi-Fi: 46% non-response\n— structural product gap",
+     "High missing rate signals low adoption\nor poor discoverability, not absent data."),
 ]
 for i, (num, col, title, body) in enumerate(findings):
     ax = fig.add_subplot(gs[2, i])
@@ -1272,14 +1282,13 @@ for i, (num, col, title, body) in enumerate(findings):
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["bottom"].set_visible(False)
-    ax.text(0.08, 0.88, f"Finding {num}", fontsize=9, fontweight="bold",
-            color=col, transform=ax.transAxes)
-    ax.text(0.08, 0.70, title, fontsize=10, fontweight="bold",
-            color=C["navy"], transform=ax.transAxes, wrap=True,
-            multialignment="left")
-    ax.text(0.08, 0.20, body, fontsize=9, color=C["slate"],
-            transform=ax.transAxes, wrap=True, multialignment="left",
-            verticalalignment="bottom")
+    ax.text(0.08, 0.93, f"Finding {num}", fontsize=9, fontweight="bold",
+            color=col, transform=ax.transAxes, va="top")
+    ax.text(0.08, 0.82, title, fontsize=10, fontweight="bold",
+            color=C["navy"], transform=ax.transAxes,
+            multialignment="left", va="top")
+    ax.text(0.08, 0.40, body, fontsize=9, color=C["slate"],
+            transform=ax.transAxes, multialignment="left", va="top")
 
 add_watermark(fig)
 save(fig, "fig12_executive_summary.png")

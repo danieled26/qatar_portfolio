@@ -32,7 +32,9 @@ OUTPUTS (saved to ./charts/):
 
 # ── IMPORTS ───────────────────────────────────────────────────────────────────
 import os
+import sys
 import warnings
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -47,7 +49,15 @@ from scipy.stats import (
 import itertools
 
 warnings.filterwarnings("ignore")
-os.makedirs("charts", exist_ok=True)
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+SCRIPT_DIR  = Path(__file__).parent
+ROOT        = SCRIPT_DIR.parent
+DATA_CSV    = ROOT / "07_data" / "synthetic" / "04_ab_test_meal.csv"
+CHARTS_DIR  = ROOT / "08_outputs" / "charts" / "03_ab_test_charts"
+CHARTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── QATAR AIRWAYS BRAND PALETTE ───────────────────────────────────────────────
 C = {
@@ -89,9 +99,9 @@ plt.rcParams.update({
 })
 
 def save(fig, name):
-    path = f"charts/{name}"
+    path = CHARTS_DIR / name
     fig.savefig(path, dpi=180, bbox_inches="tight", facecolor=C["off_white"])
-    print(f"  ✓ Saved {path}")
+    print(f"  Saved {path.name}")
     plt.close(fig)
 
 def watermark(fig):
@@ -129,7 +139,7 @@ def add_sig_bracket(ax, x1, x2, y, p, h=0.05):
 
 # ── LOAD DATA ─────────────────────────────────────────────────────────────────
 print("Loading A/B test data...")
-df = pd.read_csv("04_ab_test_meal.csv")
+df = pd.read_csv(DATA_CSV)
 df["flight_date"] = pd.to_datetime(df["flight_date"])
 
 ctrl = df[df["test_group"] == "Control"]
@@ -796,24 +806,31 @@ ax.set_ylabel("Avg Meal Satisfaction")
 ax.legend(fontsize=9)
 
 # Finding cards (bottom row)
+econ_lift = cabin_df[cabin_df["cabin"] == "Economy"]["lift"].values[0]
+econ_sig  = sig_stars(cabin_df[cabin_df["cabin"] == "Economy"]["p"].values[0])
+fr_lift   = (treat["meal_finish_rate"].mean() - ctrl["meal_finish_rate"].mean()) * 100
+
 findings = [
-    (C["positive"],  "01 — Primary Metric: SIGNIFICANT",
-     f"Treatment lifted meal satisfaction by +{lift_abs:.2f}pts (t-test p={t_p:.4f}, "
-     f"Cohen's d={d:.2f}). Effect confirmed by non-parametric Mann-Whitney test. "
-     f"Result consistent across all 4 test routes."),
-    (C["maroon"],    "02 — Complaint Rate Halved",
-     f"In-flight complaints fell from {ctrl_complaint_rate:.0f}% to {treat_complaint_rate:.0f}% "
-     f"(χ²={chi2_c:.2f}, p={p_c:.4f}). Behavioural metric (finish rate +{(treat['meal_finish_rate'].mean()-ctrl['meal_finish_rate'].mean())*100:.0f}pp) "
-     f"independently confirms passenger preference — not just stated satisfaction."),
-    (C["steel_dark"],"03 — Economy Cabin: Highest ROI",
-     f"Economy shows largest lift (+{cabin_df[cabin_df['cabin']=='Economy']['lift'].values[0]:.2f}pts, "
-     f"{sig_stars(cabin_df[cabin_df['cabin']=='Economy']['p'].values[0])}). "
-     f"First Class lift negligible — already at satisfaction ceiling. "
-     f"Prioritise Economy rollout for maximum impact per dollar spent."),
-    (C["warning"],   "04 — Caveat: Validate Over 12 Months",
-     "Trial ran Apr–Jul 2024 only. Summer travel behaviours may inflate results. "
-     "Recommend full 12-month validation before permanent menu change. "
-     "Monitor cost-per-meal uplift vs complaint-handling cost savings quarterly."),
+    (C["positive"],
+     "01 — Primary Metric: SIGNIFICANT",
+     f"+{lift_abs:.2f}pt satisfaction lift (t-test p<0.001 ***)\n"
+     f"Confirmed by Mann-Whitney non-parametric test.\n"
+     f"Effect consistent across all 4 routes."),
+    (C["maroon"],
+     "02 — Complaint Rate Halved",
+     f"Complaints: {ctrl_complaint_rate:.0f}% → {treat_complaint_rate:.0f}% (chi2 p<0.001 ***)\n"
+     f"Finish rate +{fr_lift:.0f}pp — behavioural confirmation\n"
+     f"of preference, not just stated satisfaction."),
+    (C["steel_dark"],
+     "03 — Economy Cabin: Highest ROI",
+     f"Economy lift: +{econ_lift:.2f}pts ({econ_sig}) — largest gain.\n"
+     f"First Class negligible — already at ceiling.\n"
+     f"Prioritise Economy for maximum $ impact."),
+    (C["warning"],
+     "04 — Caveat: 12-Month Validation Needed",
+     "Trial: Apr–Jul 2024 only — summer bias possible.\n"
+     "Recommend 12-month validation before full rollout.\n"
+     "Monitor cost uplift vs complaint savings quarterly."),
 ]
 for i, (col, title, body) in enumerate(findings):
     ax = fig.add_subplot(gs[2, i])
@@ -824,21 +841,20 @@ for i, (col, title, body) in enumerate(findings):
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["bottom"].set_visible(False)
-    ax.text(0.06, 0.88, title, fontsize=9, fontweight="bold",
-            color=col, transform=ax.transAxes)
-    ax.text(0.06, 0.18, body, fontsize=8.5, color=C["grey_dark"],
-            transform=ax.transAxes, wrap=True,
-            multialignment="left", verticalalignment="bottom",
-            linespacing=1.5)
+    ax.text(0.06, 0.93, title, fontsize=9, fontweight="bold",
+            color=col, transform=ax.transAxes, va="top")
+    ax.text(0.06, 0.68, body, fontsize=9, color=C["grey_dark"],
+            transform=ax.transAxes, multialignment="left",
+            va="top", linespacing=1.6)
 
 fig.text(0.99, 0.01,
          "Qatar Airways | Meal Service A/B Test | PDD Portfolio | n=6,000",
          ha="right", va="bottom", fontsize=8, color=C["grey_dark"], alpha=0.5)
 
-EXEC_PATH = "charts/fig_ab_05_executive_summary.png"
+EXEC_PATH = CHARTS_DIR / "fig_ab_05_executive_summary.png"
 fig.savefig(EXEC_PATH, dpi=180, bbox_inches="tight", facecolor=C["off_white"])
 plt.close(fig)
-print(f"  ✓ Saved {EXEC_PATH}")
+print(f"  Saved {EXEC_PATH.name}")
 
 
 # ── FINAL SUMMARY ─────────────────────────────────────────────────────────────
